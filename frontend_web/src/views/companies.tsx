@@ -43,8 +43,8 @@ const Companies: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { companies, totalResults, isLoading } = useSelector(companiesSelector);
-  const [page, setPage] = useState<number>(Number(query.get("page")));
   const [rows, setRows] = useState([]);
+  const [page, setPage] = useState<number>(Number(query.get("page")));
   const [storedData, setStoredData] = useLocalStorage("hiddenCompanies", "[]");
   const [filterType, setFilterType] = useLocalStorage("view", "onlyVisible");
 

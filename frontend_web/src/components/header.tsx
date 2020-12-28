@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: "rgba(89, 98, 115, 0.2) 1px 0 10px 0",
     },
     logo: {
-      fontFamily: "'Baloo 2', cursive",
+      fontFamily: "'Baloo', sans-serif",
       fontWeight: 800,
       fontSize: 34,
       color: "#333333",
