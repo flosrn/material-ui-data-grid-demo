@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Avatar, CircularProgress, Typography, IconButton, Icon, Grid } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { grey, red, blue, yellow, orange, green, purple } from "@material-ui/core/colors";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -11,6 +11,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { clearState, companiesSelector, getCompany, toggleCompanyVisibility } from "src/store/slices/companiesSlice";
 import useLocalStorage from "src/hooks/useLocalStorage";
+import { colors, icons } from "src/utils/constants";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,11 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
-// An array of colors
-const colors = ["grey", "red", "blue", "yellow", "orange", "green", "purple"] as const;
-// An array of icons
-const icons = ["build", "anchor", "fingerprint", "privacy_tip", "room", "pets", "outbond"] as const;
 
 // Return a random index from array
 const getRandomIndex = (array: any) => {

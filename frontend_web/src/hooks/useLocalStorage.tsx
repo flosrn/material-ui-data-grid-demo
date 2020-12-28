@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateArray } from "src/utils";
+import { updateArray } from "src/lib";
 
 /**
  * Custom useLocaleStorage Hook
@@ -29,7 +29,7 @@ export default function useLocalStorage(key: string, initialValue: string) {
       // If no args
       if (!value && !storedData) {
         setStoredValue("[]");
-        // Remove local storage
+        // Remove local storage and return
         return window.localStorage.removeItem(key);
         // If the data in local storage is an empty array
       } else if (storedData === "[]") {
@@ -44,9 +44,9 @@ export default function useLocalStorage(key: string, initialValue: string) {
         // The value to store is simply the initial value
         valueToStore = value;
       }
-      // Save state
+      // Save valueToStore in the state
       setStoredValue(valueToStore);
-      // Save to local storage
+      // Save valueToStore in the local storage
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       // Log the error

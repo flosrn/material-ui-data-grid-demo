@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { addVisibleAttribute } from "src/utils";
-
-const BASE_URL = "http://localhost:3000/api/companies";
+import { addVisibleAttribute } from "src/lib";
+import { BASE_URL } from "src/utils/constants";
 
 interface State {
   isLoading: boolean;

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import clsx from "clsx";
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Button } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { DataGrid, ColDef, PageChangeParams, CellParams, CellClassParams } from "@material-ui/data-grid";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import clsx from "clsx";
 import {
   clearState,
   companiesSelector,
@@ -15,7 +16,6 @@ import {
   setAllCompaniesVisible,
   toggleCompanyVisibility,
 } from "src/store/slices/companiesSlice";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import useLocalStorage from "src/hooks/useLocalStorage";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -76,7 +76,7 @@ const Companies: React.FC = () => {
     return () => {
       active = false;
     };
-  }, [page, storedData, dispatch]);
+  }, [page, dispatch]);
 
   const handlePageChange = (params: PageChangeParams) => {
     if (params.paginationMode === "server" && params.rowCount > 0) {
