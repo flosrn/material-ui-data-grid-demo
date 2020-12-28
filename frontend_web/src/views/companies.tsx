@@ -16,6 +16,7 @@ import {
   toggleCompanyVisibility,
 } from "src/store/slices/companiesSlice";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import useLocalStorage from "src/hooks/useLocalStorage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,21 +45,19 @@ const Companies: React.FC = () => {
   const { companies, totalResults, isLoading } = useSelector(companiesSelector);
   const [page, setPage] = useState<number>(Number(query.get("page")));
   const [rows, setRows] = useState([]);
-  const [filterType, setFilterType] = useState(() => {
-    return localStorage.getItem("view") || "onlyVisible";
-  });
+  const [storedData, setStoredData] = useLocalStorage("hiddenCompanies", "[]");
+  const [filterType, setFilterType] = useLocalStorage("view", "onlyVisible");
 
   useEffect(() => {
     clearState();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("view", filterType);
     switch (filterType) {
       case "onlyHidden":
-        return setRows(companies.filter((company: Company) => !company.visible));
+        return setRows(companies?.filter((company: Company) => !company.visible));
       case "onlyVisible":
-        return setRows(companies.filter((company: Company) => company.visible));
+        return setRows(companies?.filter((company: Company) => company.visible));
       case "all":
         return setRows(companies);
       default:
@@ -69,7 +68,7 @@ const Companies: React.FC = () => {
   useEffect(() => {
     let active = true;
     (async () => {
-      await dispatch(getCompanies(page));
+      await dispatch(getCompanies(page, storedData));
       if (!active) {
         return;
       }
@@ -77,7 +76,7 @@ const Companies: React.FC = () => {
     return () => {
       active = false;
     };
-  }, [page, dispatch]);
+  }, [page, storedData, dispatch]);
 
   const handlePageChange = (params: PageChangeParams) => {
     if (params.paginationMode === "server" && params.rowCount > 0) {
@@ -105,7 +104,12 @@ const Companies: React.FC = () => {
       headerName: "Visibility",
       description: "Button for hide or show a company from the list",
       renderCell: (params: CellParams) => (
-        <IconButton onClick={() => dispatch(toggleCompanyVisibility(params.row.id))}>
+        <IconButton
+          onClick={() => {
+            setStoredData(params.row.id, storedData);
+            dispatch(toggleCompanyVisibility(params.row.id));
+          }}
+        >
           {params.value ? <VisibilityIcon /> : <VisibilityOffIcon />}
         </IconButton>
       ),
@@ -133,7 +137,14 @@ const Companies: React.FC = () => {
           <Button onClick={() => setFilterType("all")}>Show all</Button>
           <Button onClick={() => setFilterType("onlyHidden")}>Show only hidden</Button>
           <Button onClick={() => setFilterType("onlyVisible")}>Show only visible</Button>
-          <Button onClick={() => dispatch(setAllCompaniesVisible())}>Set all visible</Button>
+          <Button
+            onClick={() => {
+              dispatch(setAllCompaniesVisible());
+              setStoredData();
+            }}
+          >
+            Set all visible
+          </Button>
           <DataGrid
             loading={isLoading}
             columns={columns}

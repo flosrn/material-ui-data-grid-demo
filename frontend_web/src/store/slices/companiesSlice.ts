@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { addVisibleAttribute, returnPersistent } from "src/utils";
+import { addVisibleAttribute } from "src/utils";
 
 const BASE_URL = "http://localhost:3000/api/companies";
 
@@ -101,13 +101,14 @@ export default companiesSlice.reducer;
  * Get the list of the companies in the current page
  *
  * @param {number} page - The page number
+ * @param storedData
  */
-export function getCompanies(page: number) {
+export function getCompanies(page: number, storedData: string[] | undefined) {
   return async (dispatch: any) => {
     dispatch(fetch());
     try {
       const response = await axios.get(`${BASE_URL}-${page}.json`);
-      const formattedData = addVisibleAttribute(response.data);
+      const formattedData = addVisibleAttribute(response.data, storedData);
       dispatch(fetchCompaniesSuccess(formattedData));
     } catch (error) {
       dispatch(fetchCompaniesFailure());
@@ -141,8 +142,6 @@ export function getCompany(id: string) {
  */
 export function toggleCompanyVisibility(id: string | number) {
   return async (dispatch: any) => {
-    const persistentData = returnPersistent(localStorage.getItem("hiddenCompanies"), id);
-    localStorage.setItem("hiddenCompanies", persistentData);
     dispatch(updateCompaniesState({ id }));
   };
 }
@@ -152,7 +151,6 @@ export function toggleCompanyVisibility(id: string | number) {
  */
 export function setAllCompaniesVisible() {
   return async (dispatch: any) => {
-    localStorage.removeItem("hiddenCompanies");
     dispatch(clearVisibility());
   };
 }

@@ -10,6 +10,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { clearState, companiesSelector, getCompany, toggleCompanyVisibility } from "src/store/slices/companiesSlice";
+import useLocalStorage from "src/hooks/useLocalStorage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -99,6 +100,7 @@ const Company: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { company, isLoading, isSuccess, hasErrors } = useSelector(companiesSelector);
+  const [storedData, setStoredData] = useLocalStorage("hiddenCompanies", "[]");
   const [isVisible, setVisible] = useState<boolean>(true);
 
   useEffect(() => {
@@ -106,10 +108,8 @@ const Company: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const persistentData: string | null = localStorage.getItem("hiddenCompanies");
-    const parsedData = persistentData && JSON.parse(persistentData);
-    setVisible(!parsedData.includes(id));
-  }, [id]);
+    setVisible(!storedData.includes(id));
+  }, [id, storedData]);
 
   useEffect(() => {
     let active = true;
@@ -126,6 +126,7 @@ const Company: React.FC = () => {
 
   const handleClick = () => {
     setVisible(!isVisible);
+    setStoredData(id, storedData);
     dispatch(toggleCompanyVisibility(id));
   };
 
