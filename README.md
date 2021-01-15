@@ -1,169 +1,91 @@
-# Sharework Developer Test
+# Material-ui data-grid Demo
 
-This test aims at getting an idea about how candidates fit Sharework's standards in terms of software development.
+The project is just an exemple of how to use the [data-grid component](https://material-ui.com/components/data-grid/) from Material-ui library.
 
-At Sharework, we do not expect you to master everything we do or use - we are looking for people that will understand what we want to do and will have good ideas about how to do it, so please use whatever you want to show us your skills!
 
-## Context
+### Libraries use in this project :<br />
+The data is fetching with pagination from JSON API with **axios**.<br />
+The navigation between table row to detail page is handled by **react-router-dom**.<br />
+The state management is handled by **redux-toolkit**.
 
-Sharework develops a solution that aims at finding companies present in multiple CRMs, to build a bunch of different features for our customers.
-Here are the main definitions of the keywords we use:
+### Features :<br />
+- Show or hide company from the list
+- Show or hide company fron the company detail page
+- Change data table view
+- Change density table  
+- Change rows per page
+- Navigate between page
+- Persistent actions (with local storage) 
 
-- B2B: Business to Business, e.g. companies whose product or service targets other companies (as opposed to B2C or C2C, where C stands for individual customer)
-- CRM: Customer Relationship Management, a tool used by companies to manage the lifecycle of their targets & customer
-- Prospect: a company that is in a CRM but not yet a customer
-- Customer: a company that has already purchased / subscribed to a product or service
-- Match: a pair of CRM records representing a company, that are representing similar entities. It could be an exact match (representing exactly the same company), or a close match (entities of the same group for instance)
+### Example:
 
-The goal of this test is to give you the opportunity to show us where in our stack you would feel most comfortable, we do not expect our candidates to shine in all areas but you should be able to contribute to a least one of the major areas.
+![Farmers Market Finder Demo](public/demo.gif)
 
-## General instructions
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Getting started
+## Available Scripts
 
-Clone this repository on your local machine.
+In the project directory, you can run:
 
-### Expectations
+### `yarn start`
 
-Unless told otherwise, pick the sections of the test that you feel most comfortable with. Our goal is to see how you shine in your area of expertise, not what you do not know.
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-We do not expect you to work on all tests, although it is always a plus to do as much as possible. But please, do not spend night and days on the test, this is really not the goal.
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-### Deliver your results
+### `yarn test`
 
-Each test has its own directory in the repository. This is where everything you write for your test should be located.
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Once you have finished working on the tests, please compress the whole repository and send it to us.
+### `yarn build`
 
-## Matching
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-In the matching/ folder, you will find 2 datasets of companies and some of their attributes.
-They represent the data available in the CRMs of 2 of our users.
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-### Mission
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Your goals are:
+### `yarn eject`
 
-1. Write an algorithm that will use the data from the "companies" table and compute matches based on the company attributes
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-   - only compute matches between companies from different sources
-   - you can use any attribute, but in general name only is not good enough
-   - unless you want to implement the following step, you can output the result in the form of a CSV file with the columns of your choice
-     - make sure we can identify in the match exactly what records are involved
-     - you can include extra data, such as a score, or reasons that explain the match etc...
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-2. (optional) Use a sqlite database
-   - Write a connector that ingests the CSV files and store the data in a SQlite database
-     - all the data should be loaded in a table named "companies"
-     - this table should include a "source_id" column and a "source_name" column, that will store the ID in the source CSV and the name for the source file
-   - Store the results of the matching algorithm in "matches" table
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-### Evaluation
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-The following criteria will be used to evaluate the code you write:
+## Learn More
 
-- Precision: percentage of identified matches that are correct matches
-- Recall: percentage of actual matches that are listed in your results
-- Performance: how fast is your implementation?
-- Code modularity and readability
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-Bonus points:
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-- Include unit tests
-- Implement Step 2
+### Code Splitting
 
-### Tips
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-We do not expect you to use all possible ways to identify matches, but rather to show us what good ideas you have to find as many matches as possible.
+### Analyzing the Bundle Size
 
-If you choose to implement Step 2, we highly recommend the use of an ORM to maniplate the data (such as Django ORM, Rails Active Record), but this is not required. But if you implement something without an ORM, take into account security best practices in the area of databases.
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-## Backend Web
+### Making a Progressive Web App
 
-Sharework exposes data to users only through RESTful APIs. This exercise aims at giving you an opportunity to show us how comfortable you are with the concept related to backend web development and RESTful API standards.
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-We prepared data that corresponds to the output of the "Matching" section, in the form of a file named backend_base.sqlite3.
-It contains:
+### Advanced Configuration
 
-- a "companies" table, containing many records of company and their attributes
-- a "matches" table, containing a sample of matches computed by Sharework
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Mission
+### Deployment
 
-Implement and API on top of this database that allows the following operations:
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-- list companies
-- access a single company
-- list matching companies for a given company
-- (optional) mark a match as "invalid"
+### `yarn build` fails to minify
 
-You can modify the schema if you need to.
-
-The technology you use is up to you, simply implement something you are comfortable with.
-
-Defining the output format is completely up to you, XML, JSON, or whatever you think is suitable for this use case.
-
-### Evaluation
-
-We will look at the following points with attention:
-
-- Follow the REST principles
-- Make sure the response format is easily readable
-- Keep performance in mind: we should be able to expose data very quickly to users to keep our app reactive
-
-Bonus points:
-
-- Unit Testing
-- API Testing
-
-## Frontend Web
-
-We use React and Redux for our front end application.
-We included a basic React app in the "frontend_web" directory (using create-react-app) and we also added Redux and React-Redux to the dependencies. We also added React-Router.
-
-### Getting Started
-
-Go into the frontend_web directory and run install the app by running:
-
-```bash
-yarn install
-```
-
-You should then be able to start the server with the command:
-
-```bash
-yarn start
-```
-
-If you plan on implementing tests, simply run:
-
-```bash
-yarn test
-```
-
-To load data in the app, you can use the following URLs:
-
-- http://localhost:3000/api/companies-{page}.json
-- http://localhost:3000/api/companies/{id}.json
-
-### Mission
-
-1. Make sure that the home page displays a list of companies
-   - Use the JSON API as explained in "Getting Started"
-   - Table rows should show the company's name and ID
-   - Pick the strategy you want to deal with API pagination, but display almost 9000 lines in a page is not a good idea
-2. Provide a way to navigate from a row in the list of companies, to a page showing a specific company's details
-   - Use the JSON API to get company details from the ID
-   - Show as many details as possible
-3. Provide a mechanism to hide a company from the list
-4. Provide a mechanism to hide a company from the company details page
-
-### Evaluation
-
-The UX is what matters most: the users should understand what the see, and how to interact with the app.
-Additionally, we will look the code clarity, modularity and maintainability.
-
-Bonus points:
-
-- implement some tests using jest
-- make the actions persistent (when the page is refreshed, the hidden companies remain hidden)
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

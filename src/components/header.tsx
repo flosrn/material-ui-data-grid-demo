@@ -40,7 +40,7 @@ const Header: React.FC = () => {
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0} square>
         <Link to="/">
-          <div className={classes.logo}>Sharework</div>
+          <div className={classes.logo}>Material-ui data-grid Demo</div>
         </Link>
       </Paper>
     </div>
